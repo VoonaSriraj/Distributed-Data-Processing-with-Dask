@@ -1,103 +1,200 @@
 # Distributed Data Processing with Dask 🚀
 
-**A small demo project showing how to use Dask to process large CSV datasets in Python.**
+**A high-performance, scalable solution for processing large datasets using Dask in Python**
 
----
+[![Python](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/)
+[![Dask](https://img.shields.io/badge/Dask-FF6B6B?style=flat&logo=dask&logoColor=white)](https://dask.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VoonaSriraj/Distributed-Data-Processing-with-Dask)
 
-## 🔧 Project Overview
+## 📋 Table of Contents
 
-This repository contains a Jupyter notebook and a small script demonstrating distributed or parallel data processing using Dask. It is intended as a learning resource and a starting point for handling large tabular datasets.
+- [Project Overview](#-project-overview)
+- [Features](#-features)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Quickstart](#-quickstart)
+- [Project Structure](#-project-structure)
+- [Usage](#-usage)
+- [Running with Dask Distributed](#-running-with-dask-distributed)
+- [Performance Tips](#-performance-tips)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Acknowledgements](#-acknowledgements)
 
-Files of interest:
+## 🌟 Project Overview
 
-- `Distributed_Data_Processing_with_Dask.ipynb` — interactive notebook walkthrough
-- `main.py` — example script to run processing tasks from the command line
-- `large_dataset.csv` — example dataset used by the notebook/script
-- `requirements.txt` — Python dependencies
+This project demonstrates how to leverage Dask for efficient processing of large datasets that don't fit into memory. It provides practical examples of common data processing tasks, performance optimizations, and scaling strategies using Dask's parallel computing capabilities.
 
----
+Whether you're dealing with data that's too large for pandas or looking to speed up your data processing pipelines, this project serves as both a learning resource and a starting point for building scalable data applications.
 
-## ✅ Features
+## ✨ Features
 
-- Read large CSV files with Dask
-- Parallelize common ETL tasks (filtering, aggregation, joins)
-- Demonstrates local Dask usage and an introduction to the Dask distributed scheduler
+- **Efficient Data Loading**: Read and process large CSV files that don't fit into memory
+- **Parallel Processing**: Leverage multi-core CPUs for faster data processing
+- **Familiar API**: Dask DataFrames provide a pandas-like interface for easy adoption
+- **Scalable**: Scale from single machine to distributed clusters for larger workloads
+- **Interactive Exploration**: Jupyter notebook for interactive data analysis
+- **Production-Ready Script**: Command-line interface for automated data processing
+- **Modular Design**: Easy to extend with custom processing functions
 
----
+## 📋 Prerequisites
 
-## 🚀 Quickstart
+- Python 3.7+
+- pip (Python package manager)
+- (Optional) Jupyter Lab/Notebook for interactive development
 
-1. Clone the repository
+## 🛠️ Installation
+
+1. **Clone the repository**
 
    ```bash
    git clone https://github.com/VoonaSriraj/Distributed-Data-Processing-with-Dask.git
    cd "Distributed Data Processing with Dask"
    ```
 
-2. Create and activate a virtual environment (recommended)
+2. **Create and activate a virtual environment** (recommended)
 
    ```bash
+   # Windows
    python -m venv .venv
-   .\.venv\Scripts\activate   # Windows
-   # macOS / Linux: source .venv/bin/activate
+   .\.venv\Scripts\activate
+   
+   # macOS/Linux
+   python3 -m venv .venv
+   source .venv/bin/activate
    ```
 
-3. Install dependencies
+3. **Install dependencies**
 
    ```bash
    pip install -r requirements.txt
    ```
-
-4. Open the notebook
-
-   - Launch Jupyter: `jupyter notebook` or `jupyter lab`, then open `Distributed_Data_Processing_with_Dask.ipynb`
-
-5. Run the example script
-
+   
+   For development with additional tools:
    ```bash
-   python main.py
+   pip install -r requirements-dev.txt
    ```
 
----
+## 🚀 Quickstart
 
-## ⚙️ Running with Dask Distributed (optional)
+### Option 1: Jupyter Notebook (Interactive)
 
-For larger workloads you can run a Dask scheduler and workers locally or on a cluster.
+1. Start Jupyter Lab/Notebook:
+   ```bash
+   jupyter lab  # or jupyter notebook
+   ```
+2. Open `Distributed_Data_Processing_with_Dask.ipynb`
+3. Run the cells interactively
 
-Install the extras (if not already in `requirements.txt`):
+### Option 2: Command Line
 
 ```bash
-pip install dask[complete] distributed
+python main.py --input data/large_dataset.csv --output results/processed_data.parquet
 ```
 
-Start a local scheduler and worker in separate terminals:
+## 📁 Project Structure
 
-```bash
-dask-scheduler
-dask-worker <scheduler-address>
+```
+.
+├── data/                   # Directory for input data files
+│   └── large_dataset.csv   # Example dataset
+├── notebooks/              # Jupyter notebooks
+│   └── Distributed_Data_Processing_with_Dask.ipynb
+├── src/                    # Source code
+│   └── main.py             # Main processing script
+├── tests/                  # Unit and integration tests
+├── results/                # Output directory for processed data
+├── .gitignore              # Git ignore file
+├── requirements.txt        # Production dependencies
+├── requirements-dev.txt    # Development dependencies
+└── README.md              # This file
 ```
 
-Or create a local client inside Python:
+## 💻 Usage
+
+### Processing Data
 
 ```python
-from dask.distributed import Client
-client = Client()  # starts a local cluster
+from src.processor import process_data
+
+# Process data with default parameters
+df_processed = process_data('data/large_dataset.csv')
+
+# Process with custom chunk size
+df_processed = process_data('data/large_dataset.csv', chunksize=100000)
 ```
 
----
+### Available Script Options
 
-## 🧾 Data
+```bash
+python main.py --help
 
-The example dataset is `large_dataset.csv`. If the dataset is not present, update the notebook or `main.py` to point to your data source.
+Options:
+  --input TEXT       Input file path (CSV)  [required]
+  --output TEXT      Output file path (CSV/Parquet)  [required]
+  --chunksize INTEGER  Number of rows per partition  [default: 100000]
+  --help             Show this message and exit.
+```
 
----
+## ⚡ Running with Dask Distributed
 
-## 🛠️ Development
+For larger datasets, you can leverage Dask's distributed scheduler:
 
-- Formatting: use `black` or your preferred formatter
-- Tests: none included (feel free to add unit tests or integration tests)
+1. **Install additional dependencies**:
+   ```bash
+   pip install dask[complete] distributed
+   ```
 
----
+2. **Start a local cluster**:
+   ```bash
+   # Terminal 1: Start the scheduler
+   dask-scheduler
+   
+   # Terminal 2: Start workers (adjust nprocs as needed)
+   dask-worker localhost:8786 --nprocs 4 --nthreads 2
+   ```
+
+3. **Connect to the cluster in your code**:
+   ```python
+   from dask.distributed import Client
+   
+   # Connect to the scheduler
+   client = Client('localhost:8786')
+   
+   # Your Dask code here
+   ```
+
+## 🚀 Performance Tips
+
+1. **Partition Size**: Adjust chunk size based on your available memory
+2. **Use Efficient Data Types**: Convert to appropriate data types to reduce memory usage
+3. **Persist Frequently Used Data**: Use `client.persist()` for data reused in multiple operations
+4. **Monitor Performance**: Use Dask's built-in dashboard for performance monitoring
+   ```python
+   # Print dashboard link
+   print(client.dashboard_link)
+   ```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgements
+
+- [Dask](https://dask.org/) - For the amazing parallel computing library
+- [Pandas](https://pandas.pydata.org/) - For the inspiration and API design
+- [NumFOCUS](https://numfocus.org/) - For supporting open-source scientific computing
 
 ## 🤝 Contributing
 
