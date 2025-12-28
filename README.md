@@ -1,98 +1,13 @@
-# Distributed Data Processing with Dask
+# Distributed Data Processing with Dask 🚀
 
-A demonstration of distributed data processing using Dask for efficient handling of large datasets.
+**A high-performance, scalable solution for processing large datasets using Dask in Python**
 
-## Project Overview
+[![Python](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/)
+[![Dask](https://img.shields.io/badge/Dask-FF6B6B?style=flat&logo=dask&logoColor=white)](https://dask.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VoonaSriraj/Distributed-Data-Processing-with-Dask)
 
-This project showcases the implementation of a scalable ETL (Extract, Transform, Load) pipeline using Dask, a flexible parallel computing library for analytics. The project demonstrates how Dask can be used to process large datasets that don't fit into memory, comparing its performance with traditional pandas operations.
-
-## Key Features
-
-- Parallel data processing with Dask DataFrames
-- Performance comparison between Dask and pandas
-- Data loading and transformation operations
-- Memory-efficient processing of large datasets
-- Jupyter notebook with detailed analysis and visualizations
-
-## Tech Stack
-
-- Python 3.7+
-- Dask
-- pandas
-- NumPy
-- PyArrow
-- Matplotlib (for visualizations)
-- Jupyter Notebook
-
-## Repository Structure
-
-```
-.
-├── Distributed_Data_Processing_with_Dask.ipynb  # Main notebook with analysis
-├── main.py                                     # Example script
-├── large_dataset.csv                           # Sample dataset
-├── requirements.txt                            # Project dependencies
-└── pyproject.toml                             # Project configuration
-```
-
-## Setup and Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/VoonaSriraj/Distributed-Data-Processing-with-Dask.git
-   cd "Distributed Data Processing with Dask"
-   ```
-
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv .venv
-   .\.venv\Scripts\activate  # Windows
-   # or
-   source .venv/bin/activate  # macOS/Linux
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## How to Run
-
-### Jupyter Notebook
-1. Start Jupyter:
-   ```bash
-   jupyter notebook
-   ```
-2. Open `Distributed_Data_Processing_with_Dask.ipynb`
-3. Run the cells to see the analysis
-
-### Command Line
-The project includes a basic Python script:
-```bash
-python main.py
-```
-
-## Notes and Limitations
-
-- The project is primarily a demonstration and learning resource
-- Performance gains from Dask are more noticeable with larger datasets
-- The included dataset is a sample; for best results, use larger datasets
-
-## Future Improvements
-
-- Add more complex data transformations
-- Include additional performance benchmarks
-- Extend with real-time data processing examples
-- Add error handling and logging
-- Implement unit tests
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Author / Maintainer
-
-Voona Sriraj
+## 📋 Table of Contents
 
 - [Project Overview](#-project-overview)
 - [Features](#-features)
