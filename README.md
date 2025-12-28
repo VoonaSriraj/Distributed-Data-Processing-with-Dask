@@ -1,224 +1,146 @@
-# Distributed Data Processing with Dask 🚀
+# Distributed Data Processing with Dask
+[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/VoonaSriraj/Distributed-Data-Processing-with-Dask)
 
-**A high-performance, scalable solution for processing large datasets using Dask in Python**
-
-[![Python](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/)
-[![Dask](https://img.shields.io/badge/Dask-FF6B6B?style=flat&logo=dask&logoColor=white)](https://dask.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VoonaSriraj/Distributed-Data-Processing-with-Dask)
+This repository provides a practical demonstration and performance comparison of a scalable ETL (Extract, Transform, Load) pipeline using Dask versus Pandas. The core of this project is a Jupyter notebook that processes a large dataset, showcasing Dask's ability to handle data that may not fit into memory and to parallelize computations for significant speed improvements.
 
 ## 📋 Table of Contents
-
-- [Project Overview](#-project-overview)
-- [Features](#-features)
+- [Overview](#-overview)
+- [Key Concepts](#-key-concepts)
 - [Prerequisites](#-prerequisites)
 - [Installation](#-installation)
-- [Quickstart](#-quickstart)
-- [Project Structure](#-project-structure)
 - [Usage](#-usage)
-- [Running with Dask Distributed](#-running-with-dask-distributed)
-- [Performance Tips](#-performance-tips)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Acknowledgements](#-acknowledgements)
+- [Pipeline Details](#-pipeline-details)
+- [Performance Results](#-performance-results)
+- [Conclusion](#-conclusion)
 
-## 🌟 Project Overview
+## 🌟 Overview
 
-This project demonstrates how to leverage Dask for efficient processing of large datasets that don't fit into memory. It provides practical examples of common data processing tasks, performance optimizations, and scaling strategies using Dask's parallel computing capabilities.
+The primary goal of this project is to illustrate the advantages of using Dask for processing large datasets. By running the same ETL task with both Dask and Pandas, the notebook provides a clear, quantitative comparison of their performance.
 
-Whether you're dealing with data that's too large for pandas or looking to speed up your data processing pipelines, this project serves as both a learning resource and a starting point for building scalable data applications.
+The ETL task consists of:
+1.  **Extract**: Loading a large CSV file.
+2.  **Transform**: Filtering rows based on a value threshold.
+3.  **Load**: Grouping the data by category and aggregating to calculate count, mean, and sum.
 
-## ✨ Features
+## ⚙️ Key Concepts
 
-- **Efficient Data Loading**: Read and process large CSV files that don't fit into memory
-- **Parallel Processing**: Leverage multi-core CPUs for faster data processing
-- **Familiar API**: Dask DataFrames provide a pandas-like interface for easy adoption
-- **Scalable**: Scale from single machine to distributed clusters for larger workloads
-- **Interactive Exploration**: Jupyter notebook for interactive data analysis
-- **Production-Ready Script**: Command-line interface for automated data processing
-- **Modular Design**: Easy to extend with custom processing functions
+*   **Lazy Evaluation (Dask)**: Dask builds a task graph of all operations without executing them immediately. Computation is only triggered when a result is explicitly requested (e.g., via the `.compute()` method). This allows for complex query optimization.
+*   **Parallel Processing (Dask)**: Dask breaks the DataFrame into multiple partitions (smaller Pandas DataFrames) and operates on them in parallel across multiple CPU cores, drastically reducing wall-clock time.
+*   **In-Memory Processing (Pandas)**: Pandas loads the entire dataset into memory before performing operations. This is fast for datasets that fit in RAM but fails or becomes extremely slow for larger-than-memory datasets.
 
 ## 📋 Prerequisites
 
-- Python 3.7+
-- pip (Python package manager)
-- (Optional) Jupyter Lab/Notebook for interactive development
+*   Python (>=3.12 recommended)
+*   A large CSV dataset to test the pipelines. The notebook assumes a file named `large_dataset.csv` with `category` and `value` columns. You will need to provide your own and update the file path in the notebook.
 
 ## 🛠️ Installation
 
-1. **Clone the repository**
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/VoonaSriraj/Distributed-Data-Processing-with-Dask.git
+    cd Distributed-Data-Processing-with-Dask
+    ```
 
-   ```bash
-   git clone https://github.com/VoonaSriraj/Distributed-Data-Processing-with-Dask.git
-   cd "Distributed Data Processing with Dask"
-   ```
+2.  **Create and activate a virtual environment (recommended):**
+    ```bash
+    # For Windows
+    python -m venv .venv
+    .\.venv\Scripts\activate
 
-2. **Create and activate a virtual environment** (recommended)
+    # For macOS/Linux
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
 
-   ```bash
-   # Windows
-   python -m venv .venv
-   .\.venv\Scripts\activate
-   
-   # macOS/Linux
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
+3.  **Install the required dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-3. **Install dependencies**
+## 🚀 Usage
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-   
-   For development with additional tools:
-   ```bash
-   pip install -r requirements-dev.txt
-   ```
+1.  Place your large CSV dataset (e.g., `large_dataset.csv`) in the project directory.
 
-## 🚀 Quickstart
+2.  Open the Jupyter notebook and update the `csv_path` variable to point to your dataset:
+    ```python
+    # In Distributed_Data_Processing_with_Dask.ipynb
+    csv_path = Path("path/to/your/large_dataset.csv")
+    ```
 
-### Option 1: Jupyter Notebook (Interactive)
+3.  Start Jupyter and run the notebook:
+    ```bash
+    jupyter notebook Distributed_Data_Processing_with_Dask.ipynb
+    ```
+    or
+    ```bash
+    jupyter lab
+    ```
 
-1. Start Jupyter Lab/Notebook:
-   ```bash
-   jupyter lab  # or jupyter notebook
-   ```
-2. Open `Distributed_Data_Processing_with_Dask.ipynb`
-3. Run the cells interactively
+4.  Execute the cells in the notebook to run both pipelines and see the performance comparison.
 
-### Option 2: Command Line
+## ⚙️ Pipeline Details
 
-```bash
-python main.py --input data/large_dataset.csv --output results/processed_data.parquet
-```
+The notebook defines two functions, `dask_etl_pipeline` and `pandas_etl_pipeline`, which perform the same set of operations.
 
-## 📁 Project Structure
-
-```
-.
-├── data/                   # Directory for input data files
-│   └── large_dataset.csv   # Example dataset
-├── notebooks/              # Jupyter notebooks
-│   └── Distributed_Data_Processing_with_Dask.ipynb
-├── src/                    # Source code
-│   └── main.py             # Main processing script
-├── tests/                  # Unit and integration tests
-├── results/                # Output directory for processed data
-├── .gitignore              # Git ignore file
-├── requirements.txt        # Production dependencies
-├── requirements-dev.txt    # Development dependencies
-└── README.md              # This file
-```
-
-## 💻 Usage
-
-### Processing Data
-
+### Dask ETL Pipeline
 ```python
-from src.processor import process_data
+def dask_etl_pipeline(csv_path, value_threshold):
+    # Data loading is lazy and creates a Dask DataFrame
+    df = dd.read_csv(
+        csv_path,
+        blocksize="128MB",
+        assume_missing=True,
+        dtype_backend="pyarrow"
+    )
 
-# Process data with default parameters
-df_processed = process_data('data/large_dataset.csv')
-
-# Process with custom chunk size
-df_processed = process_data('data/large_dataset.csv', chunksize=100000)
+    # Transformations build a task graph
+    df = df[df["value"] > value_threshold]
+    result = (
+        df.groupby("category")
+        .agg(
+            count=("value", "count"),
+            mean_value=("value", "mean"),
+            sum_value=("value", "sum"),
+        )
+    )
+    
+    # Computation is triggered here
+    output = result.compute()
+    return output
 ```
 
-### Available Script Options
+### Pandas ETL Pipeline
+```python
+def pandas_etl_pipeline(csv_path, value_threshold):
+    # Data is loaded entirely into memory
+    df = pd.read_csv(csv_path)
 
-```bash
-python main.py --help
-
-Options:
-  --input TEXT       Input file path (CSV)  [required]
-  --output TEXT      Output file path (CSV/Parquet)  [required]
-  --chunksize INTEGER  Number of rows per partition  [default: 100000]
-  --help             Show this message and exit.
+    # Transformations are executed immediately
+    df = df[df["value"] > value_threshold]
+    output = (
+        df.groupby("category")
+        .agg(
+            count=("value", "count"),
+            mean_value=("value", "mean"),
+            sum_value=("value", "sum"),
+        )
+    )
+    return output
 ```
 
-## ⚡ Running with Dask Distributed
+## 📊 Performance Results
 
-For larger datasets, you can leverage Dask's distributed scheduler:
+The notebook automatically times each stage of the pipelines and generates a comparison table. The results clearly show Dask's superiority for this task, primarily due to its lazy and parallel nature. Dask's data loading time is near-zero, as it only scans the file metadata initially. The heavy lifting is done during the transformation phase, which runs in parallel.
 
-1. **Install additional dependencies**:
-   ```bash
-   pip install dask[complete] distributed
-   ```
+An example output from the notebook:
 
-2. **Start a local cluster**:
-   ```bash
-   # Terminal 1: Start the scheduler
-   dask-scheduler
-   
-   # Terminal 2: Start workers (adjust nprocs as needed)
-   dask-worker localhost:8786 --nprocs 4 --nthreads 2
-   ```
+| Framework | Total Time (seconds) | Data Loading Time (seconds) | Transformation Time (seconds) | Speedup (Pandas / Dask) | Time Reduction (%) |
+| :-------- | :------------------- | :-------------------------- | :---------------------------- | :---------------------- | :----------------- |
+| **Dask**  | 166.97               | 0.06                        | 166.91                        | -                       | -                  |
+| **Pandas**| 517.65               | 299.96                      | 217.69                        | 3.10x                   | 67.74%             |
 
-3. **Connect to the cluster in your code**:
-   ```python
-   from dask.distributed import Client
-   
-   # Connect to the scheduler
-   client = Client('localhost:8786')
-   
-   # Your Dask code here
-   ```
+As shown, Dask completed the task more than **3 times faster** than Pandas, with a total time reduction of nearly 68%. This performance gap widens significantly as dataset sizes increase beyond the available system RAM.
 
-## 🚀 Performance Tips
+## ✅ Conclusion
 
-1. **Partition Size**: Adjust chunk size based on your available memory
-2. **Use Efficient Data Types**: Convert to appropriate data types to reduce memory usage
-3. **Persist Frequently Used Data**: Use `client.persist()` for data reused in multiple operations
-4. **Monitor Performance**: Use Dask's built-in dashboard for performance monitoring
-   ```python
-   # Print dashboard link
-   print(client.dashboard_link)
-   ```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgements
-
-- [Dask](https://dask.org/) - For the amazing parallel computing library
-- [Pandas](https://pandas.pydata.org/) - For the inspiration and API design
-- [NumFOCUS](https://numfocus.org/) - For supporting open-source scientific computing
-
-## 🤝 Contributing
-
-Contributions are welcome! Please open issues or pull requests on the repository. Keep changes focused and add tests where appropriate.
-
----
-
-## 📝 License
-
-Add your license here (e.g., MIT). If you want me to add a license file, tell me which license to use and I'll add it.
-
----
-
-## 📬 Contact
-
-Maintainer: `VoonaSriraj` — see the repository for contact details.
-
----
-
-If you'd like, I can also:
-
-- Add badges (build / license)
-- Add a short usage example from `main.py` to the README
-- Add a LICENSE file (e.g., MIT)
-
-Let me know which of the above you'd like to include. ✨
-
+This project serves as a clear and effective demonstration of Dask's power for scalable data processing. For ETL workloads involving large datasets, Dask provides a robust, scalable, and high-performance alternative to single-machine tools like Pandas. Its familiar API, modeled after Pandas, makes it an accessible tool for data scientists and engineers looking to scale their data pipelines.
