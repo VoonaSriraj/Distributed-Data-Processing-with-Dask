@@ -1,5 +1,6 @@
 # Distributed Data Processing with Dask
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/VoonaSriraj/Distributed-Data-Processing-with-Dask)
+[![Python](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/)
+[![Dask](https://img.shields.io/badge/Dask-FF6B6B?style=flat&logo=dask&logoColor=white)](https://dask.org/)
 
 This repository provides a practical demonstration and performance comparison of a scalable ETL (Extract, Transform, Load) pipeline using Dask versus Pandas. The core of this project is a Jupyter notebook that processes a large dataset, showcasing Dask's ability to handle data that may not fit into memory and to parallelize computations for significant speed improvements.
 
@@ -144,3 +145,4 @@ As shown, Dask completed the task more than **3 times faster** than Pandas, with
 ## ✅ Conclusion
 
 This project serves as a clear and effective demonstration of Dask's power for scalable data processing. For ETL workloads involving large datasets, Dask provides a robust, scalable, and high-performance alternative to single-machine tools like Pandas. Its familiar API, modeled after Pandas, makes it an accessible tool for data scientists and engineers looking to scale their data pipelines.
+
